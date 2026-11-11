@@ -11,6 +11,7 @@ import os
 import shutil
 import sys
 import tarfile
+import tempfile
 import zipfile
 
 # Windows কনসোল (cp1252) বাংলা ছাপতে পারে না বলে পরীক্ষা ভেঙে যেত —
@@ -31,7 +32,7 @@ from archive_core import (  # noqa: E402
     HAS_PY7ZR, HAS_RARFILE,
 )
 
-BASE = "/tmp/sweet-test"
+BASE = os.path.join(tempfile.gettempdir(), "sweet-test")
 SRC = os.path.join(BASE, "src")
 FAILED = []
 PASSED = [0]
