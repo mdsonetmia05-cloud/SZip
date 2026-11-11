@@ -250,6 +250,9 @@ def _list_7z(path, password=None):
 
 
 def _list_rar(path, password=None):
+    if not os.path.exists(path):
+        raise ArchiveError(
+            f"RAR ফাইল পাওয়া যায়নি: {path} (RAR file not found)।")
     if not HAS_RARFILE:
         raise ArchiveError(
             "RAR খুলতে rarfile আর UnRAR লাগবে — pip install rarfile করুন "
