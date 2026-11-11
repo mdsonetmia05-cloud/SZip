@@ -1,0 +1,18 @@
+# SZip — requirements.txt
+#
+# মূল অ্যাপ (main.py + archive_core.py) চালাতে কিছুই লাগে না —
+# শুধু Python 3.10+ (tkinter সহ) হলেই চলবে। ZIP / TAR / GZ / BZ2 / XZ
+# Python-এর standard library দিয়েই চলে।
+#
+# নিচেরগুলো ঐচ্ছিক (optional) — না থাকলে ওই ফরম্যাটটা শুধু বন্ধ থাকবে,
+# বাকি সব ঠিকঠাক চলবে।
+#
+# 7Z খুলতে / বানাতে চাইলে:
+py7zr>=0.20
+# RAR খুলতে চাইলে (শুধু খোলা; বানানো যায় না) — সাথে UnRAR বাইনারি লাগবে:
+rarfile>=4.0
+# Drag-drop চাইলে (না থাকলেও File > Open দিয়ে চলবে):
+tkinterdnd2>=0.3.0; sys_platform == "win32"
+
+# exe বানাতে চাইলে (শুধু Windows PC-তে, build.bat চালালেই হবে):
+PyInstaller>=6.0; sys_platform == "win32"
