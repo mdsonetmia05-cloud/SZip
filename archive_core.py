@@ -559,7 +559,12 @@ def delete_from_archive(path, names, progress=None):
         raise ArchiveError("মোছার মতো কিছু পাওয়া যায়নি।")
     total = len(remove)
     done = 0
-    tmp_fd, tmp_path = tempfile.mkstemp(suffix=".zip")
+    # Temp ফাইল আর্কাইভের ফোল্ডারেই বানানো হয় — Windows-এ os.replace
+    # অন্য ড্রাইভে কাজ করে না (WinError 17), তাই সিস্টেম temp (C:) থেকে
+    # অন্য ড্রাইভের (D:) আর্কাইভে replace করলে ভেঙে যেত। আসল ব্যবহারেও
+    # একই বাগ হতো, তাই এটা শুধু পরীক্ষার ফিক্স নয়।
+    target_dir = os.path.dirname(os.path.abspath(path))
+    tmp_fd, tmp_path = tempfile.mkstemp(suffix=".zip", dir=target_dir)
     os.close(tmp_fd)
     try:
         with zipfile.ZipFile(path, "r") as zin, \
@@ -571,7 +576,11 @@ def delete_from_archive(path, names, progress=None):
                         progress(done, total, item.filename)
                     continue
                 zout.writestr(item, zin.read(item.filename))
-        os.replace(tmp_path, path)
+        try:
+            os.replace(tmp_path, path)
+        except OSError:
+            # Cross-device fallback (যেমন Windows-এ অন্য ড্রাইভ)।
+            shutil.move(tmp_path, path)
     except Exception:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
