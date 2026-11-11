@@ -13,6 +13,15 @@ import sys
 import tarfile
 import zipfile
 
+# Windows কনসোল (cp1252) বাংলা ছাপতে পারে না বলে পরীক্ষা ভেঙে যেত —
+# তাই শুরুতেই stdout/stderr UTF-8 করে নেওয়া হয়। GitHub Actions-এ
+# এটা না থাকলে UnicodeEncodeError-এ "Run core tests" ধাপটি ফেল করত।
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from archive_core import (  # noqa: E402
