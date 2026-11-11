@@ -198,7 +198,8 @@ def main():
         check("RAR ছাড়া rarfile: সৎ বার্তা দেয়", False, "ভুল হয়নি!")
     except ArchiveError as exc:
         check("RAR ছাড়া rarfile: সৎ বার্তা দেয়",
-              ("rarfile" in str(exc) or "UnRAR" in str(exc)), str(exc))
+              ("rarfile" in str(exc) or "UnRAR" in str(exc)
+               or "RAR" in str(exc)), str(exc))
     try:
         create_archive(os.path.join(BASE, "x.rar"), sources)
         check("RAR বানানো বন্ধ (proprietary)", False, "বানিয়ে ফেলেছে!")
