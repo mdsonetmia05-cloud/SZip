@@ -2,6 +2,7 @@
 """
 archive_core.py — SZip-এর আর্কাইভ লজিক (GUI থেকে আলাদা)
 Archive logic for SZip, kept separate from the GUI.
+Copyright (c) 2026 Md. Sonet Mia (SONET). All rights reserved.
 
 শুধু Python standard library ব্যবহার করা হয়েছে যেখানে সম্ভব:
   ZIP  -> zipfile, TAR/GZ/BZ2/XZ -> tarfile

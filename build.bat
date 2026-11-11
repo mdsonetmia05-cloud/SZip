@@ -42,7 +42,7 @@ pip install PyInstaller
 
 echo.
 echo  [4/4] exe বানানো হচ্ছে (PyInstaller --onefile --windowed)...
-PyInstaller --onefile --windowed --name SZip --clean main.py
+PyInstaller --onefile --windowed --name SZip --version-file version.txt --clean main.py
 
 echo.
 if exist "dist\SZip.exe" (

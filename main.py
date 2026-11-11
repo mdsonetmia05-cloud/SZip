@@ -2,6 +2,7 @@
 """
 main.py — SZip (WinRAR-এর মতো আর্কাইভ ম্যানেজার, নিজস্ব ব্র্যান্ডিং)
 SZip — a WinRAR-like archive manager with our own branding.
+Copyright (c) 2026 Md. Sonet Mia (SONET). All rights reserved.
 
 শুধু tkinter/ttk (Python standard library) দিয়ে GUI বানানো — বাড়তি
 কোনো GUI লাইব্রেরি লাগে না, তাই PyInstaller-এ এক ফাইলের exe বানানো সহজ।
@@ -50,6 +51,9 @@ from archive_core import (
 
 APP_NAME = "SZip"
 VERSION = "1.0.0"
+AUTHOR = "Md. Sonet Mia"
+ORG = "SONET"
+COPYRIGHT = "Copyright \u00a9 2026 Md. Sonet Mia"
 RECENT_FILE = os.path.join(os.path.expanduser("~"), ".sweet_archiver_recent.json")
 MAX_RECENT = 10
 
@@ -287,6 +291,8 @@ class SZipApp:
         self.status_size.pack(side="left", padx=8, pady=3)
         self.status_msg = ttk.Label(bar, text="প্রস্তুত (Ready)")
         self.status_msg.pack(side="right", padx=8, pady=3)
+        self.status_credit = ttk.Label(bar, text="SZip by Md. Sonet Mia")
+        self.status_credit.pack(side="right", padx=8, pady=3)
 
     # -- Drag-drop (ঐচ্ছিক) ------------------------------------------------------
     def _setup_drag_drop(self):
@@ -801,7 +807,12 @@ class SZipApp:
             "WinRAR-এর মতো আর্কাইভ ম্যানেজার — নিজস্ব ব্র্যান্ডিং।\n"
             "অফলাইন, পোর্টেবল, ফাইল কোথাও আপলোড হয় না।\n\n"
             "ZIP / 7Z / TAR / TAR.GZ / RAR (শুধু খোলা)\n"
-            "Python + tkinter দিয়ে বানানো।")
+            "Python + tkinter দিয়ে বানানো।\n\n"
+            f"Developed by {AUTHOR}\n"
+            f"Founder — {ORG}, Tangail, Bangladesh\n"
+            f"{COPYRIGHT}\n"
+            "https://mdsonetmia.vercel.app\n"
+            "https://github.com/mdsonetmia05-cloud/SZip")
 
     # -- OS-এ ফাইল/ফোল্ডার খোলা ---------------------------------------------------------------
     def _open_folder(self, path):

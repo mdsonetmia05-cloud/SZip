@@ -1,4 +1,6 @@
-# SZip (SZip)
+# SZip
+
+Developed by **Md. Sonet Mia** — Founder, SONET, Tangail, Bangladesh. Copyright © 2026 Md. Sonet Mia.
 
 WinRAR-এর মতো আর্কাইভ ম্যানেজার — নিজস্ব ব্র্যান্ডিং, বাংলা ইন্টারফেস, সম্পূর্ণ অফলাইন।
 ফাইল কোথাও আপলোড হয় না, ইন্টারনেট লাগে না, ইনস্টলও লাগে না (exe পোর্টেবল)।
