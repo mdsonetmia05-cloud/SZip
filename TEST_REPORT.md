@@ -123,3 +123,81 @@ ZIP/TAR/পাসওয়ার্ড/RAR-সীমা/path-traversal পরী
   Windows-only ফাইল — শুধু রেফারেন্স হিসেবে রাখা হয়েছে, একবারও চালানো/ইনস্টল করা হয়নি।
 - **GUI চোখে দেখা:** Linux Xvfb-তে শুধু স্মোক টেস্ট হয়েছে; আসল Windows-এ চেহারা
   Mark-কে নিজে দেখে জানাতে হবে।
+
+---
+
+# v1.1.0 — ডিফল্ট ইংরেজি UI, বাংলা বদলানো যায় (২০২৬-১১-১১)
+
+**পরিবর্তন:** `main.py`-এ `STRINGS` টেবিল যোগ করা হয়েছে (`en`/`bn`, ১৪১টি করে কি) —
+মেনু, টুলবার, পথ বার, Treeview হেডিং, স্ট্যাটাস বার, সার্চ, সব বোতাম ও ডায়ালগ
+(Help/About/Info/প্রম্পট/কনফার্মেশন/এরর) এখন দুই ভাষায়। ডিফল্ট **ইংরেজি**;
+Options মেনুতে `English (default)` / `বাংলা (Bengali)` রেডিও — চাপলেই সাথে সাথে
+পুরো UI বদলে যায় (রিস্টার্ট লাগে না), পছন্দ `~/.szip_settings.json`-এ থাকে।
+VERSION 1.1.0; `version.txt`-ও 1.1.0 (CompanyName ও LegalCopyright আগের মতোই)।
+About-এর লেখক লাইন (Developed by Md. Sonet Mia, Founder — SONET,
+Copyright © 2026 Md. Sonet Mia, ওয়েবসাইট ও GitHub লিংক) দুই ভাষাতেই একই।
+
+**`archive_core.py` বদলানো হয়নি — ইচ্ছে করে।** এর বার্তাগুলো (যেমন
+"অসমর্থিত ফরম্যাট (unsupported format)") ইতিমধ্যে ইংরেজি বন্ধনীসহ, আর
+পরীক্ষাগুলো বার্তার কি-ওয়ার্ডের ওপর নির্ভর করে (যেমন "RAR", "ZIP", "py7zr",
+"unsafe") — ভাষা বদলে আবার Windows বিল্ড ভাঙার ঝুঁকি নেওয়া হয়নি। তাই কোর
+এরর বার্তা (যেমন আর্কাইভ খুলতে না পারলে দেখানো বার্তা) এখনো বাংলায়, ইংরেজি
+বন্ধনীসহ। GUI-এর নিজের সব লেখা ইংরেজি-ডিফল্ট।
+
+## চালানো কমান্ড (exact commands)
+
+```bash
+cd ~/workspace/zip-extractor
+
+# ১. কম্পাইল যাচাই
+python3 -m py_compile main.py archive_core.py tests/test_core.py
+
+# ২. মূল টেস্ট — venv Python (py7zr 1.1.4 + rarfile, UnRAR নেই = Actions runner-এর মতো)
+#    (python3 -m venv /tmp/sweet-test-venv; pip install py7zr rarfile — আগেই করা ছিল)
+/tmp/sweet-test-venv/bin/python tests/test_core.py
+
+# ৩. সিস্টেম Python-এ টেস্ট (py7zr/rarfile নেই)
+python3 tests/test_core.py
+
+# ৪. GUI ভাষা স্মোক টেস্ট (Xvfb-তে, আসল উইন্ডো খুলে; tests/gui_lang_smoke.py)
+rm -rf /tmp/szip-gui-home && mkdir -p /tmp/szip-gui-home
+HOME=/tmp/szip-gui-home xvfb-run -a python3 tests/gui_lang_smoke.py
+
+# ৫. পারসিস্টেন্স প্রব (সংরক্ষিত বাংলা সেটিংসে শুরু, নষ্ট সেটিংসে ডিফল্ট en;
+#    tests/gui_persist_probe.py)
+rm -rf /tmp/szip-gui-home2 && mkdir -p /tmp/szip-gui-home2
+HOME=/tmp/szip-gui-home2 xvfb-run -a python3 tests/gui_persist_probe.py
+```
+
+## ফলাফল — v1.1.0
+
+- **কম্পাইল: PASS** (`python3 -m py_compile main.py archive_core.py tests/test_core.py`)
+- **মূল টেস্ট — venv (py7zr + rarfile): ৩৯টি PASS, ০টি FAIL**
+- **সিস্টেম Python: ৩৩টি PASS, ০টি FAIL**
+- **GUI ভাষা স্মোক টেস্ট (Xvfb): ৪১টি PASS, ০টি FAIL** — সেটিংস ফাইল না থাকলে
+  ডিফল্ট ইংরেজি (মেনু File/Options/Help, টুলবার "＋ Add", হেডিং Name/Modified,
+  স্ট্যাটাস "Ready", "0 files", "No archive open"); স্যাম্পল ZIP খুলে
+  "3 items (3 files)" / "Opened: sample.zip"; Options মেনুর রেডিওতে বাংলায়
+  বদল ("ফাইল (File)", "＋ যোগ করুন (Add)", "নাম (Name)",
+  "3টি আইটেম (মোট 3টি ফাইল)"), `~/.szip_settings.json`-এ `{"language": "bn"}`
+  সংরক্ষিত; আবার English-এ ফিরে গিয়ে সব আগের মতো, সেটিংস `{"language": "en"}`।
+  About/Help-এর ইংরেজি ও বাংলা লেখা দুটোই যাচাই করা হয়েছে; লেখক লাইন দুই
+  ভাষাতেই অপরিবর্তিত।
+- **পারসিস্টেন্স প্রব: ALL PASS** — সংরক্ষিত `{"language": "bn"}` থাকলে অ্যাপ
+  বাংলায় শুরু হয় ("ফাইল (File)", "প্রস্তুত (Ready)"); প্রোগ্রেস ডায়ালগের
+  লেবেলও বাংলায়; নষ্ট সেটিংস ফাইল বা ভুল ভাষা (`"xx"`) থাকলে ডিফল্ট `en`।
+
+## স্মোক টেস্টে পাওয়া একটি বিষয় (অ্যাপের বাগ নয়)
+
+ভাষা বদলের সময় `_apply_language()` `refresh_list()` ডাকে, যা v1.0.0-এর মতোই
+ক্ষণস্থায়ী "Opened: ..." স্ট্যাটাসটি আর্কাইভের ফরম্যাট ("zip") দিয়ে বদলে দেয় —
+সর্ট/সার্চ/নেভিগেশনের পরও একই আচরণ হয়। পরীক্ষার প্রত্যাশা সেভাবেই ঠিক করা হয়েছে;
+অ্যাপের আচরণে কিছু বদলানো হয়নি।
+
+## যা পরীক্ষা করা হয়নি (সত্যিটা, v1.1.0)
+
+- **আসল Windows-এ GUI:** শুধু Linux Xvfb-তে যাচাই হয়েছে; Windows-এ চেহারা ও
+  ভাষা বদল Mark-কে নিজে দেখে জানাতে হবে।
+- **Windows .exe:** ইচ্ছে করেই বানানো হয়নি — Linux-এ PyInstaller দিয়ে Windows
+  exe বানানো যায় না। v1.1.0-এর exe আলাদাভাবে (GitHub Actions) বানাতে হবে।
+- **archive_core.py-এর বার্তা:** ওপরে বলা কারণে ইচ্ছে করে বদলানো হয়নি।

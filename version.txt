@@ -2,8 +2,8 @@
 # SZip exe version info — Properties > Details-এ দেখা যাবে।
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 0, 0, 0),
-    prodvers=(1, 0, 0, 0),
+    filevers=(1, 1, 0, 0),
+    prodvers=(1, 1, 0, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -19,12 +19,12 @@ VSVersionInfo(
           [
             StringStruct(u'CompanyName', u'Md. Sonet Mia / SONET'),
             StringStruct(u'FileDescription', u'SZip - offline archive manager'),
-            StringStruct(u'FileVersion', u'1.0.0'),
+            StringStruct(u'FileVersion', u'1.1.0'),
             StringStruct(u'InternalName', u'SZip'),
             StringStruct(u'LegalCopyright', u'Copyright \u00a9 2026 Md. Sonet Mia'),
             StringStruct(u'OriginalFilename', u'SZip.exe'),
             StringStruct(u'ProductName', u'SZip'),
-            StringStruct(u'ProductVersion', u'1.0.0')
+            StringStruct(u'ProductVersion', u'1.1.0')
           ]
         )
       ]
